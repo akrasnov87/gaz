@@ -26,13 +26,14 @@
             android:elevation="7dp"/>
 
         <View
+            android:id="@+id/border"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="100dp"
             android:layout_marginBottom="100dp"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
-            android:background="@drawable/border"
+            android:background="@drawable/border_red"
             android:elevation="6dp"/>
 
         <ImageView

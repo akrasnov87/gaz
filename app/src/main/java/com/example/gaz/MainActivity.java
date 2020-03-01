@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 import android.view.TextureView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
     private HandlerThread mBackgroundThread;
     private Handler mBackgroundHandler = null;
     private ImageView mResult;
+    private View mView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
         }
         mPreview = findViewById(R.id.preview);
         mResult = findViewById(R.id.result);
+        mView = findViewById(R.id.border);
     }
 
     @Override
@@ -156,7 +159,14 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
     }
 
     @Override
-    public void onLogUpload(HttpResult httpResult, long frameNumber, byte[] bytes) {
+    public void onLogPreUpload(long frameNumber) {
+        mView.setBackground(getResources().getDrawable(R.drawable.border_red, null));
+    }
+
+    @Override
+    public void onLogUploaded(HttpResult httpResult, long frameNumber, byte[] bytes) {
+        mView.setBackground(getResources().getDrawable(R.drawable.border_green, null));
+
         if(bytes != null) {
             count++;
             Drawable d = new BitmapDrawable(getResources(), BitmapFactory.decodeByteArray(bytes, 0, bytes.length));

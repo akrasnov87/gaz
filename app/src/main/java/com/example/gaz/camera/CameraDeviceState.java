@@ -1,5 +1,6 @@
 package com.example.gaz.camera;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
@@ -80,8 +81,14 @@ public class CameraDeviceState extends CameraDevice.StateCallback {
                     try {
                         mCaptureSession.setRepeatingRequest(builder.build(), new CameraCaptureSession.CaptureCallback() {
                             @Override
-                            public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, long frameNumber) {
+                            public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, final long frameNumber) {
                                 super.onCaptureStarted(session, request, timestamp, frameNumber);
+                                ((Activity)mContext).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        mCallback.onLogPreUpload(frameNumber);
+                                    }
+                                });
                                 if(frameNumber != 0 && frameNumber % Constants.FRAME_NUMBER == 0 && isUploaded()) {
                                     Log.d(Constants.LOG_TAG, "processing " + frameNumber + " frame");
                                     uploadToServer(mImageView, frameNumber);
@@ -124,7 +131,7 @@ public class CameraDeviceState extends CameraDevice.StateCallback {
                         Log.d(Constants.LOG_TAG, "Frame " + frameNumber + " is " + httpResult.meta.success);
                         mIsUploaded = true;
                         if(mCallback != null) {
-                            mCallback.onLogUpload(httpResult, frameNumber, bytes);
+                            mCallback.onLogUploaded(httpResult, frameNumber, bytes);
                         }
                     }
                 });
