@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextureView
+            android:id="@+id/textureView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="2dp"/>
+
+        <ImageView
+            android:id="@+id/result"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            tools:src="@mipmap/ic_launcher"
+            android:elevation="4dp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/preview"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:text="Идет передача данных..."
+        tools:text="255 frame upload"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        tools:drawableStart="@drawable/ic_launcher_foreground"/>
+
+</LinearLayout>
