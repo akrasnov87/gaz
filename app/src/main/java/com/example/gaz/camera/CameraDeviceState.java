@@ -83,14 +83,21 @@ public class CameraDeviceState extends CameraDevice.StateCallback {
                             @Override
                             public void onCaptureStarted(@NonNull CameraCaptureSession session, @NonNull CaptureRequest request, long timestamp, final long frameNumber) {
                                 super.onCaptureStarted(session, request, timestamp, frameNumber);
-                                ((Activity)mContext).runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        mCallback.onLogPreUpload(frameNumber);
-                                    }
-                                });
                                 if(frameNumber != 0 && frameNumber % Constants.FRAME_NUMBER == 0 && isUploaded()) {
+                                    ((Activity)mContext).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mCallback.onLogPreUpload(frameNumber);
+                                        }
+                                    });
+
                                     Log.d(Constants.LOG_TAG, "processing " + frameNumber + " frame");
+                                    ((Activity)mContext).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            mCallback.onLogStatus("Фрагмент " + frameNumber + " передан на сервер. Жду ответа...");
+                                        }
+                                    });
                                     uploadToServer(mImageView, frameNumber);
                                 }
                             }

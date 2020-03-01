@@ -58,4 +58,12 @@
         android:layout_margin="10dp"
         tools:drawableStart="@drawable/ic_launcher_foreground"/>
 
+    <TextView
+        android:id="@+id/log"
+        android:layout_margin="5dp"
+        android:textSize="10sp"
+        tools:text="Ожидание..."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"/>
 </LinearLayout>

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
     private Handler mBackgroundHandler = null;
     private ImageView mResult;
     private View mView;
+    private TextView mLog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
         mPreview = findViewById(R.id.preview);
         mResult = findViewById(R.id.result);
         mView = findViewById(R.id.border);
+        mLog = findViewById(R.id.log);
     }
 
     @Override
@@ -164,7 +166,13 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
     }
 
     @Override
+    public void onLogStatus(String text) {
+        mLog.setText(text);
+    }
+
+    @Override
     public void onLogUploaded(HttpResult httpResult, long frameNumber, byte[] bytes) {
+        mLog.setText("");
         mView.setBackground(getResources().getDrawable(R.drawable.border_green, null));
 
         if(bytes != null) {
